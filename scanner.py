@@ -48,10 +48,22 @@ def scan_ports(sip, port):
             portname = socket.getservbyport(port, 'tcp')
         except OSError:
             portname = "unknown"
+        
+        try:
+            banner = s.recv(1024).decode(errors='ignore').strip()
+        except:
+            banner = ""
+        
         with open(f"saves/{sip}" , "a") as f:
+            if banner:
+                f.write(f"Port {port} is open | {portname} | {banner}")
+            else:
+                f.write(f"Port {port} is open | {portname}")
             
-            f.write(f"Port {port} is open | {portname}\n")
-        print(f"Port {port} is open | {portname}\n")
+        if banner:
+            print(f"Port {port} is open | {portname} | {banner}")
+        else:
+            print(f"Port {port} is open | {portname}")
 
     
 
