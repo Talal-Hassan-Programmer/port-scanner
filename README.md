@@ -17,7 +17,7 @@ A fast, multithreaded Python port scanner built from scratch using raw sockets. 
 | Multithreaded scanning — all ports checked simultaneously | ✅ |
 | Displays service name for each open port | ✅ |
 | Saves scan results to a .txt file | ✅ |
-| CLI argument support with argparse | 🔜 |
+| CLI argument support with argparse | ✅ |
 | Banner grabbing (detect software versions) | 🔜 |
 | Upgrade to python-nmap for advanced scanning | 🔜 |
 
@@ -39,11 +39,17 @@ port-scanner/
 
 ## 🚀 Usage
 
+### With CLI arguments
+
+```bash
+python scanner.py -t scanme.nmap.org -p 1-1024
+```
+
+### Interactive mode (no arguments)
+
 ```bash
 python scanner.py
 ```
-
-Follow the prompts:
 
 ```
 Please enter a valid IP or hostname:
@@ -60,6 +66,13 @@ Port scans ended for 45.33.32.156
 
 Results are automatically saved to `saves/45.33.32.156.txt`.
 
+### Arguments
+
+| Argument | Description |
+|---|---|
+| `-t`, `--sip` | Target IP address or hostname |
+| `-p`, `--sport` | Port range in format `start-end` (e.g. `1-1024`) |
+
 ---
 
 ## ⚙️ How It Works
@@ -75,7 +88,7 @@ Results are automatically saved to `saves/45.33.32.156.txt`.
 ## 📋 Requirements
 
 - Python 3.x
-- No external libraries — uses only built-in `socket`, `threading`, `os`, and `time` modules
+- No external libraries — uses only built-in `socket`, `threading`, `argparse`, `os`, and `time` modules
 
 ---
 
