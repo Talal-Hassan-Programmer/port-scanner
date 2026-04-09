@@ -16,8 +16,7 @@ A fast, multithreaded Python port scanner built from scratch using raw sockets. 
 | Custom port range input (e.g. 1-1024) | ✅ |
 | Multithreaded scanning — all ports checked simultaneously | ✅ |
 | Displays service name for each open port | ✅ |
-| Save results to a .txt file | 🔜 |
-| Export results to JSON | 🔜 |
+| Saves scan results to a .txt file | ✅ |
 | CLI argument support with argparse | 🔜 |
 | Banner grabbing (detect software versions) | 🔜 |
 | Upgrade to python-nmap for advanced scanning | 🔜 |
@@ -30,7 +29,8 @@ A fast, multithreaded Python port scanner built from scratch using raw sockets. 
 port-scanner/
 │
 ├── scanner.py       # All scanning logic
-├── .gitignore       # Python gitignore
+├── saves/           # Scan results saved here (git-ignored)
+├── .gitignore       # Ignores saves/ folder
 ├── LICENSE          # MIT License
 └── README.md        # This file
 ```
@@ -58,6 +58,8 @@ Port 80 is open | http
 Port scans ended for 45.33.32.156
 ```
 
+Results are automatically saved to `saves/45.33.32.156.txt`.
+
 ---
 
 ## ⚙️ How It Works
@@ -66,13 +68,14 @@ Port scans ended for 45.33.32.156
 2. One thread is spawned per port using `threading.Thread`
 3. Each thread attempts a TCP connection with a 1 second timeout via `socket.connect_ex()`
 4. Open ports are printed with their service name from `socket.getservbyport()`
+5. Results are written to a `.txt` file inside the `saves/` folder
 
 ---
 
 ## 📋 Requirements
 
 - Python 3.x
-- No external libraries — uses only built-in `socket` and `threading` modules
+- No external libraries — uses only built-in `socket`, `threading`, `os`, and `time` modules
 
 ---
 
