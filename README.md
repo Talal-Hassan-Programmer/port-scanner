@@ -18,7 +18,7 @@ A fast, multithreaded Python port scanner built from scratch using raw sockets. 
 | Displays service name for each open port | ✅ |
 | Saves scan results to a .txt file | ✅ |
 | CLI argument support with argparse | ✅ |
-| Banner grabbing (detect software versions) | 🔜 |
+| Banner grabbing (detect software versions on open ports) | ✅ |
 | Upgrade to python-nmap for advanced scanning | 🔜 |
 
 ---
@@ -59,7 +59,7 @@ Please enter a valid port range <int>-<int>:
 > 1-1024
 
 Port scans started for 45.33.32.156
-Port 22 is open | ssh
+Port 22 is open | ssh | SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.13
 Port 80 is open | http
 Port scans ended for 45.33.32.156
 ```
@@ -81,7 +81,8 @@ Results are automatically saved to `saves/45.33.32.156.txt`.
 2. One thread is spawned per port using `threading.Thread`
 3. Each thread attempts a TCP connection with a 1 second timeout via `socket.connect_ex()`
 4. Open ports are printed with their service name from `socket.getservbyport()`
-5. Results are written to a `.txt` file inside the `saves/` folder
+5. If the service sends a response, the banner is captured using `socket.recv(1024)` and displayed
+6. Results are written to a `.txt` file inside the `saves/` folder
 
 ---
 
