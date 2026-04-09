@@ -1,6 +1,7 @@
 import socket
 import threading
 import time
+import os
 
 while True:
     while True:
@@ -23,6 +24,7 @@ while True:
 
 
     #Main Scans
+    os.makedirs("saves", exist_ok=True)
 
     def scan_ports(sip, port):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -33,8 +35,10 @@ while True:
                 portname = socket.getservbyport(port, 'tcp')
             except OSError:
                 portname = "unknown"
-
-            print(f"Port {port} is open | {portname}")
+            with open(f"saves/{sip}" , "a") as f:
+                
+                f.write(f"Port {port} is open | {portname}\n")
+            print(f"Port {port} is open | {portname}\n")
 
     
 
@@ -48,7 +52,8 @@ while True:
         
 
     # Start each thread
-    
+    with open(f"saves/{sip}" , "a") as f:
+            f.write(f"starting at {time.strftime("%Y-%m-%d %H:%M:%S")} \n")
     print(f"Port scans started for {sip}")
     for t in threads:
         t.start()
