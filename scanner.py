@@ -29,7 +29,12 @@ while True:
         s.settimeout(1) 
         result = s.connect_ex((sip, port))
         if result == 0:
-            print(f"Port {port} is open")
+            try:
+                portname = socket.getservbyport(port, 'tcp')
+            except OSError:
+                portname = "unknown"
+
+            print(f"Port {port} is open | {portname}")
 
     
 
